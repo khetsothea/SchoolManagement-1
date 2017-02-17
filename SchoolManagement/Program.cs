@@ -39,6 +39,11 @@ namespace SchoolManagement
                 case 2:
                     Q2();
                     break;
+                case 3:
+                    Q3();
+                    break;
+
+                        
             }
         }
 
@@ -100,13 +105,11 @@ namespace SchoolManagement
             db.Person.Add(newStuent);
             db.SaveChanges();
             listData.ListCourse();
-            listData.ListPerson(stuFirst,stuLast);
             string menu3 = "Please Choose the Course ID You want to Enroll";
             string courseID = AskInput(menu3);
             var person = db.Person.Where(p => p.FirstName == stuFirst & p.LastName == stuLast)
                              .OrderByDescending(p => p.PersonID)
                              .First();
-            Console.WriteLine(person.PersonID);
             var studentEnroll = new StudentGrade();
             studentEnroll.CourseID = short.Parse(courseID);
             studentEnroll.StudentID = person.PersonID;
@@ -116,6 +119,27 @@ namespace SchoolManagement
         }
 
         //Create a new Course and assign to a Department
+        public static void Q3()
+        {
+            string menu1 = "Please Enter New CourseID (4 Digits)";
+            string courseID = AskInput(menu1);
+            string menu2 = "Please Enter New Course Title";
+            string courseTitle = AskInput(menu2);
+            string menu3 = "Please Enter Course Credit";
+            string courseCredit = AskInput(menu3);
+            listData.ListDepartment();
+            string menu4 = "Please Choose DepartmentID";
+            string departmentID = AskInput(menu4);
+            var newCourse = new Course();
+            newCourse.CourseID = short.Parse(courseID);
+            newCourse.Title = courseTitle;
+            newCourse.Credits = byte.Parse(courseCredit);
+            newCourse.DepartmentID = byte.Parse(departmentID);
+            db.Course.Add(newCourse);
+            db.SaveChanges();
+            listData.ListCourse();
+            Success();
+        }
         //View all Student grades in a Course
         //View all  Instructors and display the course they teach
         //Delete a Student

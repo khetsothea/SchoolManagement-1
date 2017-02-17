@@ -23,13 +23,20 @@ namespace SchoolManagement
             }
         }
 
-        public void ListPerson(string firstName, string lastName)
-        {
-            var personTable = db.Person.Where(p => p.FirstName == firstName && p.LastName == lastName);
-            foreach (var row in personTable)
-            {
-                Console.WriteLine(row.PersonID + "   " + row.FirstName + "   " + row.LastName);
+        public void ListDepartment() {
+            var department = db.Department.ToList();
+            foreach (var row in department) {
+                Console.WriteLine(row.DepartmentID + "   " + row.Name);
             }
         }
+
+        //public void ListPerson(string firstName, string lastName)
+        //{
+        //    var personTable = db.Person.Where(p => p.FirstName == firstName && p.LastName == lastName);
+        //    foreach (var row in personTable)
+        //    {
+        //        Console.WriteLine(row.PersonID + "   " + row.FirstName + "   " + row.LastName);
+        //    }
+        //}
     }
 }
