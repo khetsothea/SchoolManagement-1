@@ -23,10 +23,35 @@ namespace SchoolManagement
             }
         }
 
-        public void ListDepartment() {
+        public void ListDepartment()
+        {
             var department = db.Department.ToList();
-            foreach (var row in department) {
+            foreach (var row in department)
+            {
                 Console.WriteLine(row.DepartmentID + "   " + row.Name);
+            }
+        }
+
+        public void ListStudentGradeByCourse(short id)
+        {
+            var course = db.Course.ToList();
+            var studentGrade = db.StudentGrade.ToList();
+            var query = from c in course
+                        join sg in studentGrade
+                        on c.CourseID equals sg.CourseID
+                        where c.CourseID == id
+                        select c.CourseID + "   " + c.Title + "   " + sg.StudentID + "   " + sg.Grade;
+            Console.WriteLine("CourseID     Title     StudentID     Grade");
+            if (query.Count() == 0)
+            {
+                Console.WriteLine("Sorry,there is no record in this course.");
+            }
+            else
+            {
+                foreach (var row in query)
+                {
+                    Console.WriteLine(row.ToString());
+                }
             }
         }
 

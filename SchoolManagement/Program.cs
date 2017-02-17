@@ -30,7 +30,13 @@ namespace SchoolManagement
                 "*****************************************************************"
             };
             for (var i = 0; i < menu.Length; i++) { Console.WriteLine(menu[i]); };
+            Response();
+        }
+
+        public static void Response()
+        {
             int input = Int16.Parse(Console.ReadLine());
+
             switch (input)
             {
                 case 1:
@@ -42,8 +48,10 @@ namespace SchoolManagement
                 case 3:
                     Q3();
                     break;
+                case 4:
+                    Q4();
+                    break;
 
-                        
             }
         }
 
@@ -61,6 +69,7 @@ namespace SchoolManagement
         public static void Success()
         {
             Console.WriteLine("Database Updated successfully");
+            Response();
         }
 
         //Create a new Instructor and assign instructor to the Course
@@ -141,6 +150,14 @@ namespace SchoolManagement
             Success();
         }
         //View all Student grades in a Course
+        public static void Q4()
+        {
+            listData.ListCourse();
+            string menu1 = "Please Enter CourseID (4 Digits)";
+            short courseID = short.Parse(AskInput(menu1));
+            listData.ListStudentGradeByCourse(courseID);
+            Success();
+        }
         //View all  Instructors and display the course they teach
         //Delete a Student
         //Delete a Course
