@@ -63,6 +63,7 @@
     <Compile Include="Department.cs">
       <DependentUpon>School.tt</DependentUpon>
     </Compile>
+    <Compile Include="ListData.cs" />
     <Compile Include="OfficeAssignment.cs">
       <DependentUpon>School.tt</DependentUpon>
     </Compile>

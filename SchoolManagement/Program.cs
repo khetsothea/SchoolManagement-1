@@ -10,23 +10,24 @@ namespace SchoolManagement
     {
 
         public static School db = new School();
+        public static ListData listData = new ListData();
         static void Main(string[] args)
         {
-            //using (var db = new School())
-            //{
             string[] menu = {
                 "*****************************************************************",
-                "1.Create a new Instructor and assign instructor to the Course",
-                "2.Create a new Student and enroll to the Course",
-                "3.Create a new Course and assign to a Department",
-                "4.View all Student grades in a Course",
-                "5.View all  Instructors and display the course they teach",
-                "6.Delete a Student",
-                "7.Delete a Course",
-                "8,Ability to Update a Students  record",
-                "9.Change Course a Instructor is teaching",
+                "1. Create A New Instructor and Assign Instructor to The Course",
+                "2. Create A New Student and Enroll to The Course",
+                "3. Create A New Course and Assign to A Department",
+                "4. View All Student Grades in A Course",
+                "5. View All Instructors and Display the Course They Teach",
+                "6. Delete A Student",
+                "7. Delete A Course",
+                "8, Ability to Update a Students Record",
+                "9. Change Course an Instructor Is Teaching",
+                "0. Exit The System",
                 "*****************************************************************",
                 "Please Choose an Option",
+                "*****************************************************************"
             };
             for (var i = 0; i < menu.Length; i++) { Console.WriteLine(menu[i]); };
             int input = Int16.Parse(Console.ReadLine());
@@ -36,21 +37,9 @@ namespace SchoolManagement
                     Q1();
                     break;
                 case 2:
-
+                    Q2();
                     break;
             }
-
-
-            //Create a new Student and enroll to the Course
-
-            //Create a new Course and assign to a Department
-            //View all Student grades in a Course
-            //View all  Instructors and display the course they teach
-            //Delete a Student
-            //Delete a Course
-            //Ability to Update a Students  record
-            //Change Course a Instructor is teaching
-            //}
         }
 
         public static string AskInput(string message)
@@ -97,5 +86,41 @@ namespace SchoolManagement
             db.SaveChanges();
             Success();
         }
+
+        //Create a new Student and enroll to the Course
+        public static void Q2()
+        {
+            string menu1 = "Please Enter New Student First Name";
+            string stuFirst = AskInput(menu1);
+            string menu2 = "Please Enter New Student Last Name";
+            string stuLast = AskInput(menu2);
+            var newStuent = new Person();
+            newStuent.FirstName = stuFirst;
+            newStuent.LastName = stuLast;
+            db.Person.Add(newStuent);
+            db.SaveChanges();
+            listData.ListCourse();
+            listData.ListPerson(stuFirst,stuLast);
+            string menu3 = "Please Choose the Course ID You want to Enroll";
+            string courseID = AskInput(menu3);
+            var person = db.Person.Where(p => p.FirstName == stuFirst & p.LastName == stuLast)
+                             .OrderByDescending(p => p.PersonID)
+                             .First();
+            Console.WriteLine(person.PersonID);
+            var studentEnroll = new StudentGrade();
+            studentEnroll.CourseID = short.Parse(courseID);
+            studentEnroll.StudentID = person.PersonID;
+            db.StudentGrade.Add(studentEnroll);
+            db.SaveChanges();
+            Success();
+        }
+
+        //Create a new Course and assign to a Department
+        //View all Student grades in a Course
+        //View all  Instructors and display the course they teach
+        //Delete a Student
+        //Delete a Course
+        //Ability to Update a Students  record
+        //Change Course a Instructor is teaching
     }
 }
