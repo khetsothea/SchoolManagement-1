@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d951ec42d5da4f34b96a7b4a320bf9d2" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolModel.Course" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.CourseInstructor" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.Department" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.OfficeAssignment" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.OnlineCourse" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.OnsiteCourse" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.Person" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.StudentGrade" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="SchoolModel.FK__Course__Departme__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__CourseIns__Cours__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__OnlineCou__Cours__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__OnsiteCou__Cours__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__StudentGr__Cours__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__CourseIns__Perso__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__OfficeAss__Instr__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__StudentGr__Stude__1CF15040" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
