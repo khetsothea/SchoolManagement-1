@@ -31,10 +31,18 @@ namespace SchoolManagement
                         join p in person
                         on i.InstructorID equals p.PersonID
                         select p.PersonID + "   " + p.FirstName + "   " + p.LastName;
-            foreach (var row in query)
-            {
-                Console.WriteLine(row.ToString());
-            }
+            IterateQuery(query);
+        }
+
+        public void ListStudent()
+        {
+            var student = db.StudentGrade.ToList();
+            var person = db.Person.ToList();
+            var query = from s in student
+                        join p in person
+                        on s.StudentID equals p.PersonID
+                        select s.StudentID + "     " + p.FirstName + "     " + p.LastName;
+            IterateQuery(query);
         }
 
         public void ListDepartment()
@@ -62,10 +70,7 @@ namespace SchoolManagement
             }
             else
             {
-                foreach (var row in query)
-                {
-                    Console.WriteLine(row.ToString());
-                }
+                IterateQuery(query);
             }
         }
 
@@ -88,10 +93,15 @@ namespace SchoolManagement
             }
             else
             {
-                foreach (var row in query)
-                {
-                    Console.WriteLine(row.ToString());
-                }
+                IterateQuery(query);
+            }
+        }
+
+        public void IterateQuery(IEnumerable<string> query)
+        {
+            foreach (string row in query)
+            {
+                Console.WriteLine(row.ToString());
             }
         }
 

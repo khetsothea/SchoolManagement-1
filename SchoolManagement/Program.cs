@@ -29,12 +29,10 @@ namespace SchoolManagement
                 "8. Update a Student's Record",
                 "9. Change Course an Instructor Is Teaching",
                 "0. Exit The System",
-                "*****************************************************************",
-                "Please Choose an Option",
                 "*****************************************************************"
             };
             for (var i = 0; i < menu.Length; i++) { Console.WriteLine(menu[i]); };
-            int input = Int16.Parse(Console.ReadLine());
+            int input = byte.Parse(AskInput("Please Choose an Option"));
             switch (input)
             {
                 case 1:
@@ -51,6 +49,12 @@ namespace SchoolManagement
                     break;
                 case 5:
                     Q5();
+                    break;
+                case 6:
+                    Q6();
+                    break;
+                case 7:
+                    Q7();
                     break;
                 case 0:
                     break;
@@ -161,7 +165,8 @@ namespace SchoolManagement
             Success();
         }
         //View all  Instructors and display the course they teach
-        public static void Q5() {
+        public static void Q5()
+        {
             listData.ListInstructor();
             string menu1 = "Please Enter Instructor ID";
             short instructorID = short.Parse(AskInput(menu1));
@@ -169,7 +174,40 @@ namespace SchoolManagement
             Success();
         }
         //Delete a Student
+        public static void Q6()
+        {
+            listData.ListStudent();
+            string menu1 = "Please Enter Student ID to Delete Record";
+            short studentID = short.Parse(AskInput(menu1));
+            byte answer = byte.Parse(AskInput("Do you really want to DELETE this Student?\n1:Yes\n0:No"));
+            if (answer == 1)
+            {
+                var deleteStudent = db.StudentGrade.First(s => s.StudentID == studentID);
+                db.StudentGrade.Remove(deleteStudent);
+                var deletePerson = db.Person.First(p => p.PersonID == studentID);
+                db.Person.Remove(deletePerson);
+                db.SaveChanges();
+                Success();
+            }
+            else Response();
+        }
         //Delete a Course
+        public static void Q7()
+        {
+            listData.ListCourse();
+            string menu1 = "Please Enter Course ID to Delete Record";
+            short courseID = short.Parse(AskInput(menu1));
+            byte answer = byte.Parse(AskInput("Do you really want to DELETE this COURSE?\n1:Yes\n0:No"));
+            if (answer == 1)
+            {
+                var deleteCourse = db.Course.Where(c => c.CourseID == courseID).First();
+                db.Course.Remove(deleteCourse);
+                db.SaveChanges();
+            }
+            else
+                Response();
+            Success();
+        }
         //Ability to Update a Student record
         //Change Course a Instructor is teaching
     }
