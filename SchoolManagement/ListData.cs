@@ -11,11 +11,11 @@ namespace SchoolManagement
         School db;
         public ListData()
         {
-            db = new School();
         }
 
         public void ListCourse()
         {
+            db = new School();
             var courseTable = db.Course.ToList();
             foreach (var row in courseTable)
             {
@@ -25,6 +25,7 @@ namespace SchoolManagement
 
         public void ListInstructor()
         {
+            db = new School();
             var instructor = db.OfficeAssignment.ToList();
             var person = db.Person.ToList();
             var query = from i in instructor
@@ -36,6 +37,7 @@ namespace SchoolManagement
 
         public void ListStudent()
         {
+            db = new School();
             var student = db.StudentGrade.ToList();
             var person = db.Person.ToList();
             var query = from p in person
@@ -47,6 +49,7 @@ namespace SchoolManagement
 
         public void ListStudentGradeById(int id)
         {
+            db = new School();
             var student = db.StudentGrade.ToList();
             var person = db.Person.ToList();
             var query = from s in student
@@ -58,6 +61,7 @@ namespace SchoolManagement
 
         public void ListDepartment()
         {
+            db = new School();
             var department = db.Department.ToList();
             foreach (var row in department)
             {
@@ -67,6 +71,7 @@ namespace SchoolManagement
 
         public void ListStudentGradeByCourse(short id)
         {
+            db = new School();
             var course = db.Course.ToList();
             var studentGrade = db.StudentGrade.ToList();
             var query = from c in course
@@ -75,7 +80,7 @@ namespace SchoolManagement
                         where c.CourseID == id
                         select c.CourseID + "       " + c.Title + "        " + sg.StudentID + "         " + sg.Grade;
             Console.WriteLine("CourseID     Title     StudentID     Grade");
-            if (query.Count() == 0)
+            if (query == null)
             {
                 Console.WriteLine("Sorry,there is no record in this course.");
             }
@@ -87,6 +92,7 @@ namespace SchoolManagement
 
         public void ListCourseByInstructor(short id)
         {
+            db = new School();
             var course = db.Course.ToList();
             var courseInstructor = db.CourseInstructor.ToList();
             var person = db.Person.ToList();
@@ -115,14 +121,5 @@ namespace SchoolManagement
                 Console.WriteLine(row.ToString());
             }
         }
-
-        //public void ListPerson(string firstName, string lastName)
-        //{
-        //    var personTable = db.Person.Where(p => p.FirstName == firstName && p.LastName == lastName);
-        //    foreach (var row in personTable)
-        //    {
-        //        Console.WriteLine(row.PersonID + "   " + row.FirstName + "   " + row.LastName);
-        //    }
-        //}
     }
 }

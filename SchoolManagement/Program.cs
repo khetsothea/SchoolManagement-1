@@ -12,10 +12,10 @@ namespace SchoolManagement
         public static ListData listData = new ListData();
         static void Main(string[] args)
         {
-            Response();
+            ResponseToMenu();
         }
 
-        public static void Response()
+        public static void ResponseToMenu()
         {
             string[] menu = {
                 "*****************************************************************",
@@ -59,6 +59,9 @@ namespace SchoolManagement
                 case 8:
                     Q8();
                     break;
+                case 9:
+                    Q9();
+                    break;
                 case 0:
                     break;
             }
@@ -78,7 +81,7 @@ namespace SchoolManagement
         public static void Success()
         {
             Console.WriteLine("Executed Successfully");
-            Response();
+            ResponseToMenu();
         }
 
         //Create a new Instructor and assign instructor to the Course
@@ -92,20 +95,23 @@ namespace SchoolManagement
             newInstructor.FirstName = instruFirstName;
             newInstructor.LastName = instruLastName;
             db.Person.Add(newInstructor);
-            string menu6 = "Please Enter 4 Digits Course ID";
+            db.SaveChanges();
+            listData.ListCourse();
+            string menu6 = "Please Choose the CourseID to be assigned";
             string courseID = AskInput(menu6);
-            string menu3 = "Please Enter Course Title";
-            string courseTitle = AskInput(menu3);
-            string menu4 = "Please Enter Course Credits";
-            string courseCredit = AskInput(menu4);
-            string menu5 = "Please Enter Department ID";
-            string courseDepartment = AskInput(menu5);
-            var newCourse = new Course();
-            newCourse.CourseID = short.Parse(courseID);
-            newCourse.Title = courseTitle;
-            newCourse.Credits = byte.Parse(courseCredit);
-            newCourse.DepartmentID = byte.Parse(courseDepartment);
-            db.Course.Add(newCourse);
+            CourseInstructor newCI = new CourseInstructor();
+            newCI.CourseID = short.Parse(courseID);
+            var person = db.Person.Where(p => p.FirstName == instruFirstName & p.LastName == instruLastName)
+                             .OrderByDescending(p => p.PersonID)
+                             .First();
+            if (person != null)
+            {
+                newCI.PersonID = person.PersonID;
+                OfficeAssignment newOA = new OfficeAssignment();
+                newOA.InstructorID = person.PersonID;
+                db.CourseInstructor.Add(newCI);
+                db.OfficeAssignment.Add(newOA);
+            }
             db.SaveChanges();
             Success();
         }
@@ -195,7 +201,7 @@ namespace SchoolManagement
                 db.SaveChanges();
                 Success();
             }
-            else Response();
+            else ResponseToMenu();
         }
 
         //Delete a Course
@@ -212,7 +218,7 @@ namespace SchoolManagement
                 db.SaveChanges();
             }
             else
-                Response();
+                ResponseToMenu();
             Success();
         }
 
@@ -240,9 +246,35 @@ namespace SchoolManagement
                     Success();
                 }
             }
-            else Response();
+            else ResponseToMenu();
         }
 
         //Change Course a Instructor is teaching
+        private static void Q9()
+        {
+            listData.ListInstructor();
+            string menu1 = "Please input the ID of the INSTRUCTOR you want to update.";
+            int instuctorID = Int32.Parse(AskInput(menu1));
+            listData.ListCourse();
+            string courseID = AskInput("Please choose the Course ID you want to change to.");
+            string menu2 = "Are you sure you need to update?\n1.YES\n0.No";
+            byte answer = byte.Parse(AskInput(menu2));
+            if (answer == 1)
+            {
+                var query = db.CourseInstructor.FirstOrDefault(i => i.PersonID == instuctorID);
+                if (query != null)
+                {
+                    db.CourseInstructor.Remove(query);
+                    db.SaveChanges();
+                    CourseInstructor newOne = new CourseInstructor();
+                    newOne.CourseID = short.Parse(courseID);
+                    newOne.PersonID = instuctorID;
+                    db.CourseInstructor.Add(newOne);
+                    db.SaveChanges();
+                    Success();
+                }
+            }
+            else ResponseToMenu();
+        }
     }
 }
