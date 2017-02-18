@@ -38,10 +38,21 @@ namespace SchoolManagement
         {
             var student = db.StudentGrade.ToList();
             var person = db.Person.ToList();
-            var query = from s in student
-                        join p in person
-                        on s.StudentID equals p.PersonID
+            var query = from p in person
+                        join s in student
+                        on p.PersonID equals s.StudentID
                         select s.StudentID + "     " + p.FirstName + "     " + p.LastName;
+            IterateQuery(query.Distinct());
+        }
+
+        public void ListStudentGradeById(int id)
+        {
+            var student = db.StudentGrade.ToList();
+            var person = db.Person.ToList();
+            var query = from s in student
+                        where s.StudentID == id
+                        select s.EnrollmentID + "     " + s.CourseID + "     " + s.StudentID + "     " + s.Grade;
+            Console.WriteLine("EnrollmentID     CourseID        StudentID       Grade");
             IterateQuery(query);
         }
 

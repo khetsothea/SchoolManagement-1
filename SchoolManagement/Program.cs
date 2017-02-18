@@ -56,6 +56,9 @@ namespace SchoolManagement
                 case 7:
                     Q7();
                     break;
+                case 8:
+                    Q8();
+                    break;
                 case 0:
                     break;
             }
@@ -79,7 +82,7 @@ namespace SchoolManagement
         }
 
         //Create a new Instructor and assign instructor to the Course
-        public static void Q1()
+        private static void Q1()
         {
             string menu1 = "Please enter new instructor First Name";
             string instruFirstName = AskInput(menu1);
@@ -108,7 +111,7 @@ namespace SchoolManagement
         }
 
         //Create a new Student and enroll to the Course
-        public static void Q2()
+        private static void Q2()
         {
             string menu1 = "Please Enter New Student First Name";
             string stuFirst = AskInput(menu1);
@@ -134,7 +137,7 @@ namespace SchoolManagement
         }
 
         //Create a new Course and assign to a Department
-        public static void Q3()
+        private static void Q3()
         {
             string menu1 = "Please Enter New CourseID (4 Digits)";
             string courseID = AskInput(menu1);
@@ -155,8 +158,9 @@ namespace SchoolManagement
             listData.ListCourse();
             Success();
         }
+
         //View all Student grades in a Course
-        public static void Q4()
+        private static void Q4()
         {
             listData.ListCourse();
             string menu1 = "Please Enter CourseID (4 Digits)";
@@ -164,8 +168,9 @@ namespace SchoolManagement
             listData.ListStudentGradeByCourse(courseID);
             Success();
         }
+
         //View all  Instructors and display the course they teach
-        public static void Q5()
+        private static void Q5()
         {
             listData.ListInstructor();
             string menu1 = "Please Enter Instructor ID";
@@ -173,8 +178,9 @@ namespace SchoolManagement
             listData.ListCourseByInstructor(instructorID);
             Success();
         }
+
         //Delete a Student
-        public static void Q6()
+        private static void Q6()
         {
             listData.ListStudent();
             string menu1 = "Please Enter Student ID to Delete Record";
@@ -191,8 +197,9 @@ namespace SchoolManagement
             }
             else Response();
         }
+
         //Delete a Course
-        public static void Q7()
+        private static void Q7()
         {
             listData.ListCourse();
             string menu1 = "Please Enter Course ID to Delete Record";
@@ -208,7 +215,34 @@ namespace SchoolManagement
                 Response();
             Success();
         }
+
         //Ability to Update a Student record
+        private static void Q8()
+        {
+            listData.ListStudent();
+            string menu1 = "Please input the ID of the student you want to update.";
+            int studentID = Int32.Parse(AskInput(menu1));
+            listData.ListStudentGradeById(studentID);
+            string menu2 = "Are you sure you need to update?\n1.YES\n0.No";
+            byte answer = byte.Parse(AskInput(menu2));
+            if (answer == 1)
+            {
+                int enrollmentID = Int32.Parse(AskInput("Please choose enrollment ID"));
+                listData.ListCourse();
+                string courseID = AskInput("Please update the courseID");
+                string grade = AskInput("Please update Grade");
+                var query = db.StudentGrade.First(s => s.EnrollmentID == enrollmentID);
+                if (query != null)
+                {
+                    query.CourseID = short.Parse(courseID);
+                    query.Grade = decimal.Parse(grade);
+                    db.SaveChanges();
+                    Success();
+                }
+            }
+            else Response();
+        }
+
         //Change Course a Instructor is teaching
     }
 }
