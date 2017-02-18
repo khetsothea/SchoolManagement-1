@@ -23,6 +23,20 @@ namespace SchoolManagement
             }
         }
 
+        public void ListInstructor()
+        {
+            var instructor = db.OfficeAssignment.ToList();
+            var person = db.Person.ToList();
+            var query = from i in instructor
+                        join p in person
+                        on i.InstructorID equals p.PersonID
+                        select p.PersonID + "   " + p.FirstName + "   " + p.LastName;
+            foreach (var row in query)
+            {
+                Console.WriteLine(row.ToString());
+            }
+        }
+
         public void ListDepartment()
         {
             var department = db.Department.ToList();
@@ -40,8 +54,34 @@ namespace SchoolManagement
                         join sg in studentGrade
                         on c.CourseID equals sg.CourseID
                         where c.CourseID == id
-                        select c.CourseID + "   " + c.Title + "   " + sg.StudentID + "   " + sg.Grade;
+                        select c.CourseID + "       " + c.Title + "        " + sg.StudentID + "         " + sg.Grade;
             Console.WriteLine("CourseID     Title     StudentID     Grade");
+            if (query.Count() == 0)
+            {
+                Console.WriteLine("Sorry,there is no record in this course.");
+            }
+            else
+            {
+                foreach (var row in query)
+                {
+                    Console.WriteLine(row.ToString());
+                }
+            }
+        }
+
+        public void ListCourseByInstructor(short id)
+        {
+            var course = db.Course.ToList();
+            var courseInstructor = db.CourseInstructor.ToList();
+            var person = db.Person.ToList();
+            var query = from c in course
+                        join ci in courseInstructor
+                        on c.CourseID equals ci.CourseID
+                        join p in person
+                        on ci.PersonID equals p.PersonID
+                        where p.PersonID == id
+                        select p.PersonID + "     " + p.FirstName + "     " + p.LastName + "     " + c.CourseID + "     " + c.Title + "     ";
+            Console.WriteLine("PersonID     FirstName     LastName     CourseID     Title");
             if (query.Count() == 0)
             {
                 Console.WriteLine("Sorry,there is no record in this course.");

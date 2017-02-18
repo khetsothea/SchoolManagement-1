@@ -8,21 +8,25 @@ namespace SchoolManagement
 {
     class Program
     {
-
         public static School db = new School();
         public static ListData listData = new ListData();
         static void Main(string[] args)
         {
+            Response();
+        }
+
+        public static void Response()
+        {
             string[] menu = {
                 "*****************************************************************",
-                "1. Create A New Instructor and Assign Instructor to The Course",
-                "2. Create A New Student and Enroll to The Course",
-                "3. Create A New Course and Assign to A Department",
+                "1. Create a New Instructor and Assign Instructor to The Course",
+                "2. Create a New Student and Enroll to The Course",
+                "3. Create a New Course and Assign to A Department",
                 "4. View All Student Grades in A Course",
                 "5. View All Instructors and Display the Course They Teach",
-                "6. Delete A Student",
-                "7. Delete A Course",
-                "8, Ability to Update a Students Record",
+                "6. Delete a Student",
+                "7. Delete a Course",
+                "8. Update a Student's Record",
                 "9. Change Course an Instructor Is Teaching",
                 "0. Exit The System",
                 "*****************************************************************",
@@ -30,13 +34,7 @@ namespace SchoolManagement
                 "*****************************************************************"
             };
             for (var i = 0; i < menu.Length; i++) { Console.WriteLine(menu[i]); };
-            Response();
-        }
-
-        public static void Response()
-        {
             int input = Int16.Parse(Console.ReadLine());
-
             switch (input)
             {
                 case 1:
@@ -51,7 +49,11 @@ namespace SchoolManagement
                 case 4:
                     Q4();
                     break;
-
+                case 5:
+                    Q5();
+                    break;
+                case 0:
+                    break;
             }
         }
 
@@ -68,7 +70,7 @@ namespace SchoolManagement
 
         public static void Success()
         {
-            Console.WriteLine("Database Updated successfully");
+            Console.WriteLine("Executed Successfully");
             Response();
         }
 
@@ -159,9 +161,16 @@ namespace SchoolManagement
             Success();
         }
         //View all  Instructors and display the course they teach
+        public static void Q5() {
+            listData.ListInstructor();
+            string menu1 = "Please Enter Instructor ID";
+            short instructorID = short.Parse(AskInput(menu1));
+            listData.ListCourseByInstructor(instructorID);
+            Success();
+        }
         //Delete a Student
         //Delete a Course
-        //Ability to Update a Students  record
+        //Ability to Update a Student record
         //Change Course a Instructor is teaching
     }
 }
